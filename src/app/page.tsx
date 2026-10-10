@@ -1,22 +1,49 @@
-// TEMPORARY page just to prove Steps 1 and 2 work. We replace it in Step 5.
+import Hero from "@/components/home/Hero";
+import ProductSection from "@/components/home/ProductSection";
 import { getProducts } from "@/lib/api";
-import { formatChange, formatNumber, formatPrice, getPerUnitLabel } from "@/lib/format";
+import { formatNumber } from "@/lib/format";
+import { getTopFallers, getTopRisers } from "@/lib/product-utils";
 
-// This is a Server Component (the default in the App Router), so it can be
-// async and fetch data directly. No useEffect or useState needed.
+// Server component: fetches data on the server, sends finished HTML.
 export default async function HomePage() {
+  // One request gets all 33 products. We then derive the risers and
+  // fallers from it, so we don't need extra API calls.
   const products = await getProducts();
-  const first = products[0];
+
+  const risers = getTopRisers(products, 6);
+  const fallers = getTopFallers(products, 6);
 
   return (
-    <main className="mx-auto max-w-6xl p-6">
-      <h1 className="text-3xl font-bold text-brand">বাজার দর ✅</h1>
-      <p className="mt-2">মোট {formatNumber(products.length)}টি পণ্য লোড হয়েছে</p>
-      <p className="mt-2">
-        {first.image} {first.nameBn} · {getPerUnitLabel(first.unit)} ·{" "}
-        {formatPrice(first.today)}{" "}
-        <span className="text-up">{formatChange(first.change)}</span>
-      </p>
-    </main>
+    <div className="space-y-10">
+      <Hero />
+
+      {/* Section A: top 6 price RISES. The ▲ is red (price up = red). */}
+      <ProductSection
+        title={
+          <>
+            <span className="text-up text-base">▲</span> আজ দাম বেড়েছে
+          </>
+        }
+        products={risers}
+      />
+
+      {/* Section B: top 6 price FALLS. The ▼ is green (price down = green). */}
+      <ProductSection
+        title={
+          <>
+            <span className="text-down text-base">▼</span> আজ দাম কমেছে
+          </>
+        }
+        products={fallers}
+      />
+
+      {/* Section C: everything. id="সব-পণ্য" is the target of the hero button */}
+      <ProductSection
+        id="সব-পণ্য"
+        title="সব পণ্য"
+        subtitle={`মোট ${formatNumber(products.length)}টি পণ্য দেখানো হচ্ছে`}
+        products={products}
+      />
+    </div>
   );
 }
