@@ -22,7 +22,9 @@ export function useSignOut() {
           router.push("/"); // back to Home
           router.refresh(); // re-run server components so no old data stays
         },
-        onError: () => toast.error("সাইন আউট করা যায়নি, আবার চেষ্টা করুন"),
+        onError: () => {
+          toast.error("সাইন আউট করা যায়নি, আবার চেষ্টা করুন");
+        },
       },
     });
 
