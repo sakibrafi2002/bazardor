@@ -44,11 +44,12 @@ export async function getProducts(category?: string): Promise<Product[]> {
  */
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
-    const list = await fetchJson<Product[]>(
-      `/products?slug=${encodeURIComponent(slug)}`
-    );
-    return list[0] ?? null;
-  } catch {
+    const products = await getProducts();
+    return products.find((p) => p.slug === slug) ?? null;
+  } catch (error) {
+    // Log the real problem. Without this, an API outage looks exactly like
+    // "product not found", which makes bugs very hard to spot.
+    console.error("getProductBySlug failed:", error);
     return null;
   }
 }
@@ -63,11 +64,10 @@ export async function getCategoryBySlug(
   slug: string
 ): Promise<Category | null> {
   try {
-    const list = await fetchJson<Category[]>(
-      `/categories?slug=${encodeURIComponent(slug)}`
-    );
-    return list[0] ?? null;
-  } catch {
+    const categories = await getCategories();
+    return categories.find((c) => c.slug === slug) ?? null;
+  } catch (error) {
+    console.error("getCategoryBySlug failed:", error);
     return null;
   }
 }
