@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 // Load a Bangla-capable Google font. next/font downloads it at build time and
 // self-hosts it, so there is no layout shift and no external request at runtime.
@@ -29,8 +31,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="bn" className={bengali.variable}>
-      <body className="min-h-screen font-sans antialiased">
-        <Providers>{children}</Providers>
+      <body className="flex min-h-screen flex-col font-sans antialiased">
+        <Providers>
+          {/* Appears on every page */}
+          <Navbar />
+
+          {/* flex-1 makes this area grow, which pushes the footer to the bottom
+        even on short pages. max-w-6xl + px = the centered container
+        from the requirements. */}
+          <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6">
+            {children}
+          </main>
+
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
