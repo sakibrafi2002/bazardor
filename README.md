@@ -4,8 +4,8 @@
 
 **BazarDor** is a Bangla-first web app that shows today's market prices of everyday essentials: rice, lentils, oil, vegetables, fish, meat, dairy and spices. You can see how prices changed since yesterday, compare prices across markets in different divisions, and get the lowest, highest and average price of every product.
 
-🔗 **Live Link:** [<your-vercel-url>](https://bazardor-indol.vercel.app/)
-📦 **GitHub Repository:** [<your-github-repo-url>](https://github.com/sakibrafi2002/bazardor)
+🔗 **Live Link:** https://bazardor-indol.vercel.app/
+📦 **GitHub Repository:** https://github.com/sakibrafi2002/bazardor
 
 ## ✨ Key Features
 
