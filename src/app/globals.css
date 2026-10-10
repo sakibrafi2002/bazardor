@@ -44,3 +44,30 @@ body {
   background: var(--color-surface);
   color: #1a2420;
 }
+
+/* ---------- Ticker animation ---------- */
+/* Tailwind v4: keyframes and the animation token go inside @theme.
+   This creates the utility class `animate-marquee`. */
+@theme {
+  --animate-marquee: marquee 120s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* The ticker content is rendered TWICE side by side.
+         Moving left by exactly 50% (one full copy) and then restarting
+         looks like one endless strip, because copy 2 is identical to copy 1. */
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Hide the scrollbar on the category row but keep it scrollable (mobile swipe) */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
