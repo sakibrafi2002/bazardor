@@ -8,7 +8,7 @@ import type { Category, Product } from "@/types";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
-  "https://api.abcz.workers.dev/api/bazardor";  
+  "https://openapi.programming-hero.com/api/bazardor";  
 
 /**
  * A small wrapper around fetch used by every API function.
