@@ -2,8 +2,8 @@
 // Client component: it reads the live login state and handles clicks.
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { useSignOut } from "@/lib/use-sign-out";
+
 import {
   Avatar,
   Button,
@@ -15,29 +15,16 @@ import {
 } from "@heroui/react";
 import { FiChevronDown, FiLogOut, FiUser } from "react-icons/fi";
 import { authClient } from "@/lib/auth-client";
+import { signOut } from "better-auth/api";
 
 export default function AuthMenu() {
-  const router = useRouter();
-
   // useSession() is a React hook from Better Auth.
   //   data      -> { user, session } when logged in, null when logged out
   //   isPending -> true while the first check is still running
   const { data: session, isPending } = authClient.useSession();
 
   /* ---------- Sign out ---------- */
-  async function handleSignOut() {
-    await authClient.signOut({
-      fetchOptions: {
-        // Runs only if the sign out request succeeded
-        onSuccess: () => {
-          toast.success("সফলভাবে সাইন আউট হয়েছে");
-          router.push("/"); // go to Home
-          router.refresh(); // re-run server components so nothing stays stale
-        },
-        onError: () => toast.error("সাইন আউট করা যায়নি, আবার চেষ্টা করুন"),
-      },
-    });
-  }
+  const { signOut } = useSignOut();
 
   /* ---------- State 1: still checking -> skeleton ---------- */
   // Prevents a flash of "সাইন ইন" for users who ARE logged in.
@@ -105,7 +92,7 @@ export default function AuthMenu() {
       <DropdownMenu
         aria-label="ব্যবহারকারীর মেনু"
         onAction={(key) => {
-          if (key === "signout") handleSignOut();
+          if (key === "signout") signOut();
         }}
       >
         {/* Header: full name + email (not clickable) */}

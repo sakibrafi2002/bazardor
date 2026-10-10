@@ -135,3 +135,15 @@ export function getBanglaDate(date: Date = new Date()): string {
   const year = toBengaliDigits(dhaka.getFullYear());
   return `${weekday}, ${day} ${month}, ${year}`;
 }
+
+/** A date without the weekday: "৬ অক্টোবর, ২০২৬". Used for "member since". */
+export function formatBanglaDateOnly(date: Date): string {
+  // Same Dhaka-time conversion as getBanglaDate
+  const dhaka = new Date(
+    date.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
+  );
+  const day = toBengaliDigits(dhaka.getDate());
+  const month = MONTHS_BN[dhaka.getMonth()];
+  const year = toBengaliDigits(dhaka.getFullYear());
+  return `${day} ${month}, ${year}`;
+}
