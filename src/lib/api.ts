@@ -2,9 +2,13 @@ import type { Category, Product } from "@/types";
 
 // Read the base URL from .env.local. The fallback keeps things working
 // even if the variable is missing (for example on a fresh deployment).
+// const BASE_URL =
+//   process.env.NEXT_PUBLIC_API_BASE_URL ??
+//   "https://api.api-store.workers.dev/api/bazardor";
+
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
-  "https://api.api-store.workers.dev/api/bazardor";
+  "https://api.abcz.workers.dev/api/bazardor";  
 
 /**
  * A small wrapper around fetch used by every API function.
